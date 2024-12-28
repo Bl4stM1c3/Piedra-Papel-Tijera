@@ -1,0 +1,45 @@
+#Posible solucion al problema 26 de https://retosdeprogramacion.com/ejercicios/
+#ENUNCIADO DEL PROBLEMA
+# Crea un programa que calcule quien gana más partidas al piedra,
+#  papel, tijera.
+#  - El resultado puede ser: "Player 1", "Player 2", "Tie" (empate)
+#  - La función recibe un listado que contiene pares, representando cada jugada.
+#  - El par puede contener combinaciones de "R" (piedra), "P" (papel)
+#    o "S" (tijera).
+#  - Ejemplo. Entrada: [("R","S"), ("S","R"), ("P","S")]. Resultado: "Player 2".
+
+def piedra_papel_tijera(lista): 
+    #Definimos la funciona para evaluar el juego
+    def evaluar_juego(lista):
+        
+        #Definimos las variables
+        jugador_1 = 0
+        jugador_2 = 0
+
+        #Definimos las reglas
+        reglas = {
+            "R":"S", #Rock gana a Scissors
+            "S":"P", #Scissors gana a Paper
+            "P":"R"  #Paper gana a Rock
+        }
+        #Evaluamos
+        for jugada1, jugada2 in lista:
+            if jugada1 == reglas.get(jugada2):
+                jugador_1 += 1
+            elif jugada2 == reglas.get(jugada1):
+                jugador_2 += 1
+            
+        return jugador_1, jugador_2
+    
+    # Determinamos el ganador
+    def ganador(jugador_1, jugador_2):
+        if jugador_1 > jugador_2:
+            return f"El jugador 1 ha ganado la partida {jugador_1} a {jugador_2}"
+        elif jugador_1 < jugador_2:
+            return f"El jugador 2 ha ganado la partida {jugador_2} a {jugador_1}"
+        else:
+            return f"Empate!!!! resultado {jugador_1} a {jugador_2}"
+
+    #Definimos la logica del juego
+    jugador_1, jugador_2 = evaluar_juego(lista)
+    return ganador(jugador_1, jugador_2)
